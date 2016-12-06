@@ -1,0 +1,12 @@
+use sidney;
+create table Student(id int(10) UNSIGNED auto_increment   NOT NULL,student_no varchar(20),student_name varchar(10),student_age int,student_sex varchar(2),primary key (id));
+
+insert into Student(student_no,student_name,student_age,student_sex) values ('A00000001','sidney',22,'M');
+insert into Student(student_no,student_name,student_age,student_sex) values ('A00000002','Ò¶Ó¨Ó¨',30,'F');
+insert into Student(student_no,student_name,student_age,student_sex) values ('A00000003','¹ùÏàÄĞ',24,'M');
+insert into Student(student_no,student_name,student_age,student_sex) values ('A00000004','Ğ»Î°ÈÙ',26,'M');
+insert into Student(student_no,student_name,student_age,student_sex) values ('A00000005','¼òºÆ±ê',29,'M');
+insert into Student(student_no,student_name,student_age,student_sex) values ('A00000006','Ñ¦¾ıÔÆ',24,'F');
+insert into Student(student_no,student_name,student_age,student_sex) values ('A00000007','²ÌÙ¾',25,'M');
+
+select * from Student;
