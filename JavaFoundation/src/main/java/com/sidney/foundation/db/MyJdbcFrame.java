@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -78,7 +80,7 @@ public class  MyJdbcFrame {
             
             //获取SQL语句中需要设置的参数的个数
             int parameterCount = pmd.getParameterCount() ;
-            System.out.println("parameterCount = " + parameterCount);
+          
             if (obj.length != parameterCount) {
                 throw new MyJdbcFrameException( "'" +sql +"' : parameterCount is error!") ;
             } 
@@ -89,7 +91,53 @@ public class  MyJdbcFrame {
             //执行语句：
             rs = stmt.executeQuery(); 
             
+            rs.next();
+            
+            
             return rsh.handler(rs);
+        } catch(Exception e ) {
+        	e.printStackTrace();
+            throw new MyJdbcFrameException(e.getMessage()) ;
+        } finally {
+            release(stmt, null, conn) ;
+        } 
+    } 
+    
+    
+    public List queryBatch(String sql , Object[] obj , ResultSetHandler rsh) {
+        Connection conn = null ; 
+        PreparedStatement stmt = null ; 
+        ResultSet rs = null ;
+        try {
+            //获取Connection 对象
+            conn = ds.getConnection() ;
+            stmt = conn.prepareStatement(sql) ; 
+            
+            // 获取ParameterMetaData 元数据对象。
+            ParameterMetaData pmd = stmt.getParameterMetaData() ;
+            
+            //获取SQL语句中需要设置的参数的个数
+            int parameterCount = pmd.getParameterCount() ;
+            
+            if (obj.length != parameterCount) {
+                throw new MyJdbcFrameException( "'" +sql +"' : parameterCount is error!") ;
+            } 
+            //设置参数：
+            for ( int i = 0 ; i < obj.length ; i++) {
+                stmt.setObject(i+1, obj[i]) ;
+            }
+            //执行语句：
+            rs = stmt.executeQuery(); 
+           
+            List list = new ArrayList<Object>();
+            
+            	
+            	
+          while(rs.next()){
+                	list.add(rsh.handler(rs));
+                }
+            
+            return list;
         } catch(Exception e ) {
         	e.printStackTrace();
             throw new MyJdbcFrameException(e.getMessage()) ;

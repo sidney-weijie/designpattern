@@ -17,7 +17,7 @@ public class BeanHandler implements ResultSetHandler {
 
     public Object handler(ResultSet rs) {
         try {
-            if (rs.next()) {
+            if (rs!=null) {
                 //1、获取结果集的元数据。
                 ResultSetMetaData rsm = rs.getMetaData() ;
                 //2、创建JavaBean的实例：
