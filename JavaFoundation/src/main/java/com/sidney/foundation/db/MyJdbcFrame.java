@@ -66,6 +66,10 @@ public class  MyJdbcFrame {
         }
     }
     
+    public void insertBatch(String sql, List<?> list){
+    	
+    }
+    
     public Object query(String sql , Object[] obj , ResultSetHandler rsh) {
         Connection conn = null ; 
         PreparedStatement stmt = null ; 
@@ -145,6 +149,8 @@ public class  MyJdbcFrame {
             release(stmt, null, conn) ;
         } 
     } 
+    
+    
     /**
      * 释放资源
      * @param stmt
